@@ -1,0 +1,1015 @@
+[
+    {
+        "id": "33869aeae0f97cdf",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bc8030cc46be13f7",
+        "type": "ui_gauge",
+        "z": "33869aeae0f97cdf",
+        "name": "Voltmeter",
+        "group": "0e90e82f21577c49",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Voltage (V)",
+        "label": "V",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "230",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1360,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "269f74db4284e862",
+        "type": "http request",
+        "z": "33869aeae0f97cdf",
+        "name": "GetVoltage",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2108086/fields/1.json?api_key=83PJZUHD2ACCOXQU&results=1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 480,
+        "wires": [
+            [
+                "ab4be8bdbe6dcf0c",
+                "7d6079d2747f0453"
+            ]
+        ]
+    },
+    {
+        "id": "5d4fd86daf3123da",
+        "type": "inject",
+        "z": "33869aeae0f97cdf",
+        "name": "Make Request",
+        "props": [],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "x": 120,
+        "y": 600,
+        "wires": [
+            [
+                "269f74db4284e862",
+                "19b30a35dbeda858",
+                "86d1f80baaf2e377",
+                "a034331f0a3d1e59",
+                "4195a28a711f4a92",
+                "adeb9654c4df8e33"
+            ]
+        ]
+    },
+    {
+        "id": "ab4be8bdbe6dcf0c",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "VoltageValue",
+        "func": "var volt = { payload: msg.payload.feeds[0].field1, topic:'Voltage' };\nreturn volt;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 480,
+        "wires": [
+            [
+                "18c23bc5586af1fe",
+                "501541a23c1cc27f",
+                "f3be7afeb825a488"
+            ]
+        ]
+    },
+    {
+        "id": "19b30a35dbeda858",
+        "type": "http request",
+        "z": "33869aeae0f97cdf",
+        "name": "GetCurrent",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2108086/fields/2.json?api_key=83PJZUHD2ACCOXQU&results=1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 600,
+        "wires": [
+            [
+                "15e8a0f9ceb1c34d",
+                "f80849626cc60974"
+            ]
+        ]
+    },
+    {
+        "id": "15e8a0f9ceb1c34d",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "CurrentValue",
+        "func": "var current = { payload: msg.payload.feeds[0].field2 , topic:'Current'};\nreturn current;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 600,
+        "wires": [
+            [
+                "7de1d0e153123c26",
+                "501541a23c1cc27f",
+                "f3be7afeb825a488"
+            ]
+        ]
+    },
+    {
+        "id": "1c17308b4f2829fa",
+        "type": "ui_gauge",
+        "z": "33869aeae0f97cdf",
+        "name": "Ammeter",
+        "group": "d4f267d878b09956",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Current (A)",
+        "label": "A",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1360,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "86d1f80baaf2e377",
+        "type": "http request",
+        "z": "33869aeae0f97cdf",
+        "name": "GetPower",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2108086/fields/3.json?api_key=83PJZUHD2ACCOXQU&results=1",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 340,
+        "y": 740,
+        "wires": [
+            [
+                "6fae1768a3c431fe",
+                "e6d19d54a339c5f7"
+            ]
+        ]
+    },
+    {
+        "id": "6fae1768a3c431fe",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "PowerValue",
+        "func": "var power = { payload: msg.payload.feeds[0].field3 , topic:'Power'};\nreturn power;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 740,
+        "wires": [
+            [
+                "f5d2acd850b410d6",
+                "501541a23c1cc27f",
+                "f3be7afeb825a488"
+            ]
+        ]
+    },
+    {
+        "id": "6147973d672ea2a7",
+        "type": "ui_gauge",
+        "z": "33869aeae0f97cdf",
+        "name": "Wattmeter",
+        "group": "4dac00fdf024da5c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Power (W)",
+        "label": "W",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1330,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "a034331f0a3d1e59",
+        "type": "http request",
+        "z": "33869aeae0f97cdf",
+        "name": "GetVoltageArray",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2108086/fields/1.json?api_key=83PJZUHD2ACCOXQU&results=10",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 320,
+        "y": 1140,
+        "wires": [
+            [
+                "113d18efef7daf65"
+            ]
+        ]
+    },
+    {
+        "id": "113d18efef7daf65",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "VoltageArray",
+        "func": "const data = [];\nconst label=[];\nfor (let index = 0; index < 10; index++) {\n    data.push(parseInt(msg.payload.feeds[index].field1));\n    label.push(msg.payload.feeds[index].created_at);\n\n}\nvar test = [{\n    \"series\":[\"Voltage(V)\"],\n    \"data\": [data],\n    \"labels\": label\n}];\n\nvar volt = { payload: test, topic:'Voltage' };\nreturn volt;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 1140,
+        "wires": [
+            [
+                "f7950a626740f032"
+            ]
+        ]
+    },
+    {
+        "id": "f7950a626740f032",
+        "type": "ui_chart",
+        "z": "33869aeae0f97cdf",
+        "name": "VoltageChart",
+        "group": "e3a2b390875e887d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Voltage Series",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "230",
+        "removeOlder": "1",
+        "removeOlderPoints": "10",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 730,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4195a28a711f4a92",
+        "type": "http request",
+        "z": "33869aeae0f97cdf",
+        "name": "GetCurrentArray",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2108086/fields/2.json?api_key=83PJZUHD2ACCOXQU&results=10",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 340,
+        "y": 1240,
+        "wires": [
+            [
+                "aea187632fcd1947"
+            ]
+        ]
+    },
+    {
+        "id": "aea187632fcd1947",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "CurrentArray",
+        "func": "const data = [];\nconst label=[];\nfor (let index = 0; index < 10; index++) {\n    data.push(parseInt(msg.payload.feeds[index].field2));\n    label.push(msg.payload.feeds[index].created_at);\n\n}\nvar test = [{\n    \"series\":[\"Current(A)\"],\n    \"data\": [data],\n    \"labels\": label\n}];\n\nvar amps = { payload: test, topic:'Current' };\nreturn amps;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 1240,
+        "wires": [
+            [
+                "c58261b9349a87d8"
+            ]
+        ]
+    },
+    {
+        "id": "c58261b9349a87d8",
+        "type": "ui_chart",
+        "z": "33869aeae0f97cdf",
+        "name": "CurrentChart",
+        "group": "5fe2ead215dc6e01",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Current Series",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "10",
+        "removeOlder": 1,
+        "removeOlderPoints": "10",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 750,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "adeb9654c4df8e33",
+        "type": "http request",
+        "z": "33869aeae0f97cdf",
+        "name": "GetPowerArray",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2108086/fields/3.json?api_key=83PJZUHD2ACCOXQU&results=10",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [],
+        "x": 360,
+        "y": 1340,
+        "wires": [
+            [
+                "5656fc19fc8bcbec"
+            ]
+        ]
+    },
+    {
+        "id": "5656fc19fc8bcbec",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "PowerArray",
+        "func": "const data = [];\nconst label=[];\nfor (let index = 0; index < 10; index++) {\n    data.push(parseInt(msg.payload.feeds[index].field3));\n    label.push(msg.payload.feeds[index].created_at);\n\n}\nvar test = [{\n    \"series\":[\"Power(W)\"],\n    \"data\": [data],\n    \"labels\": label\n}];\n\nvar watts = { payload: test, topic:'Power' };\nreturn watts;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 1340,
+        "wires": [
+            [
+                "987314217b89c106"
+            ]
+        ]
+    },
+    {
+        "id": "987314217b89c106",
+        "type": "ui_chart",
+        "z": "33869aeae0f97cdf",
+        "name": "PowerChart",
+        "group": "17257f94096e6553",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Power Series",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "No Data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": 1,
+        "removeOlderPoints": "10",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": true,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 770,
+        "y": 1340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5cd7b59e22b4e819",
+        "type": "file",
+        "z": "33869aeae0f97cdf",
+        "name": "Export",
+        "filename": "C:\\Users\\rohit\\OneDrive\\Desktop\\data.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "utf8",
+        "x": 1450,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4adc377f284abd9c",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "MessageToCSV",
+        "func": "var voltageValue = msg.payload.Voltage;\nvar voltageCreatedAt = msg.payload.VoltageCreatedAt;\nvar currentValue = msg.payload.Current;\nvar currentCreatedAt = msg.payload.CurrentCreatedAt;\nvar powerValue = msg.payload.Power;\nvar powerCreatedAt = msg.payload.PowerCreatedAt;\n \n\nvar m = {\n    'voltageValue': voltageValue, 'voltageCreatedAt': voltageCreatedAt,\n    'currentValue': currentValue, 'currentCreatedAt': currentCreatedAt,\n    'powerValue': powerValue, 'powerCreatedAt': powerCreatedAt\n};\n\nreturn { payload: m };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 840,
+        "wires": [
+            [
+                "7a1a4f15d622b707"
+            ]
+        ]
+    },
+    {
+        "id": "7a1a4f15d622b707",
+        "type": "csv",
+        "z": "33869aeae0f97cdf",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "voltageValue,voltageCreatedAt,currentValue,currentCreatedAt,powerValue,powerCreatedAt",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1310,
+        "y": 840,
+        "wires": [
+            [
+                "5cd7b59e22b4e819"
+            ]
+        ]
+    },
+    {
+        "id": "501541a23c1cc27f",
+        "type": "join",
+        "z": "33869aeae0f97cdf",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 770,
+        "y": 840,
+        "wires": [
+            [
+                "0d04a55999123d76"
+            ]
+        ]
+    },
+    {
+        "id": "7d6079d2747f0453",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "VoltageTime",
+        "func": "var volt = { payload: msg.payload.feeds[0].created_at, topic:'VoltageCreatedAt' };\nreturn volt;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 880,
+        "wires": [
+            [
+                "501541a23c1cc27f"
+            ]
+        ]
+    },
+    {
+        "id": "f80849626cc60974",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "CurrentTime",
+        "func": "var current = { payload: msg.payload.feeds[0].created_at , topic:'CurrentCreatedAt'};\nreturn current;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 920,
+        "wires": [
+            [
+                "501541a23c1cc27f"
+            ]
+        ]
+    },
+    {
+        "id": "e6d19d54a339c5f7",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "PowerTime",
+        "func": "var power = { payload: msg.payload.feeds[0].created_at , topic:'PowerCreatedAt'};\nreturn power;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 960,
+        "wires": [
+            [
+                "501541a23c1cc27f"
+            ]
+        ]
+    },
+    {
+        "id": "1b2e5103fa02423c",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "powerAlert",
+        "func": "var text = { payload: \"Hey There, \\nThe Power has reached threshold of \" + msg.payload.Power + \"W and voltage is \" + msg.payload.Voltage + \"V and current is \"+msg.payload.Current +\" A.\\nPlease take required action.\", topic:\"mail\"}\nreturn text;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 960,
+        "wires": [
+            [
+                "97065aa2ca1bea79"
+            ]
+        ]
+    },
+    {
+        "id": "10684389db40adb0",
+        "type": "ui_toast",
+        "z": "33869aeae0f97cdf",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 1730,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "18c23bc5586af1fe",
+        "type": "unit-converter",
+        "z": "33869aeae0f97cdf",
+        "category": "voltage",
+        "inputUnit": "V",
+        "outputUnit": "V",
+        "inputField": "payload",
+        "outputField": "payload",
+        "inputFieldType": "msg",
+        "outputFieldType": "msg",
+        "roundOutputField": false,
+        "outputFieldDecimals": 2,
+        "statusType": "none",
+        "name": "",
+        "x": 1100,
+        "y": 480,
+        "wires": [
+            [
+                "bc8030cc46be13f7"
+            ]
+        ]
+    },
+    {
+        "id": "7de1d0e153123c26",
+        "type": "unit-converter",
+        "z": "33869aeae0f97cdf",
+        "category": "current",
+        "inputUnit": "A",
+        "outputUnit": "A",
+        "inputField": "payload",
+        "outputField": "payload",
+        "inputFieldType": "msg",
+        "outputFieldType": "msg",
+        "roundOutputField": false,
+        "outputFieldDecimals": 2,
+        "statusType": "none",
+        "name": "",
+        "x": 1100,
+        "y": 600,
+        "wires": [
+            [
+                "1c17308b4f2829fa"
+            ]
+        ]
+    },
+    {
+        "id": "f5d2acd850b410d6",
+        "type": "unit-converter",
+        "z": "33869aeae0f97cdf",
+        "category": "current",
+        "inputUnit": "A",
+        "outputUnit": "A",
+        "inputField": "payload",
+        "outputField": "payload",
+        "inputFieldType": "msg",
+        "outputFieldType": "msg",
+        "roundOutputField": false,
+        "outputFieldDecimals": 2,
+        "statusType": "none",
+        "name": "",
+        "x": 1100,
+        "y": 740,
+        "wires": [
+            [
+                "6147973d672ea2a7"
+            ]
+        ]
+    },
+    {
+        "id": "0d04a55999123d76",
+        "type": "deduplicate",
+        "z": "33869aeae0f97cdf",
+        "name": "",
+        "keyproperty": "",
+        "expiry": "10",
+        "x": 950,
+        "y": 840,
+        "wires": [
+            [
+                "4adc377f284abd9c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7cd9810a1c6f635a",
+        "type": "e-mail",
+        "z": "33869aeae0f97cdf",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "rohitkg45@gmail.com",
+        "dname": "Emailer",
+        "x": 1700,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "f3be7afeb825a488",
+        "type": "join",
+        "z": "33869aeae0f97cdf",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 770,
+        "y": 980,
+        "wires": [
+            [
+                "1b2e5103fa02423c",
+                "e4dc9ef8f3c2316a"
+            ]
+        ]
+    },
+    {
+        "id": "e4dc9ef8f3c2316a",
+        "type": "switch",
+        "z": "33869aeae0f97cdf",
+        "name": "PowerChecker",
+        "property": "payload.Power",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "650",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 980,
+        "y": 1040,
+        "wires": [
+            [
+                "97065aa2ca1bea79"
+            ]
+        ]
+    },
+    {
+        "id": "cbbd3ad8856a2a24",
+        "type": "function",
+        "z": "33869aeae0f97cdf",
+        "name": "Sender",
+        "func": "if (msg.payload.Power.Power > parseInt(\"650\")){\n\n    var text = {payload:msg.payload.mail};\n}\nreturn text;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 1000,
+        "wires": [
+            [
+                "9b88b95c7ba117d6"
+            ]
+        ]
+    },
+    {
+        "id": "97065aa2ca1bea79",
+        "type": "join",
+        "z": "33869aeae0f97cdf",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1190,
+        "y": 1000,
+        "wires": [
+            [
+                "cbbd3ad8856a2a24",
+                "1de93bad003aa5c5"
+            ]
+        ]
+    },
+    {
+        "id": "9b88b95c7ba117d6",
+        "type": "deduplicate",
+        "z": "33869aeae0f97cdf",
+        "name": "",
+        "keyproperty": "",
+        "expiry": 5,
+        "x": 1530,
+        "y": 1000,
+        "wires": [
+            [
+                "7cd9810a1c6f635a",
+                "10684389db40adb0"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1de93bad003aa5c5",
+        "type": "debug",
+        "z": "33869aeae0f97cdf",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "56217bcb7e2c32bd",
+        "type": "ui_spacer",
+        "z": "33869aeae0f97cdf",
+        "name": "spacer",
+        "group": "49e4adae967befbb",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "0e90e82f21577c49",
+        "type": "ui_group",
+        "name": "Voltage",
+        "tab": "c1c70187ad535e15",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false
+    },
+    {
+        "id": "d4f267d878b09956",
+        "type": "ui_group",
+        "name": "Current",
+        "tab": "c1c70187ad535e15",
+        "order": 2,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "4dac00fdf024da5c",
+        "type": "ui_group",
+        "name": "Power",
+        "tab": "c1c70187ad535e15",
+        "order": 3,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "e3a2b390875e887d",
+        "type": "ui_group",
+        "name": "VoltageChart",
+        "tab": "c1c70187ad535e15",
+        "order": 4,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "5fe2ead215dc6e01",
+        "type": "ui_group",
+        "name": "CurrentChart",
+        "tab": "c1c70187ad535e15",
+        "order": 5,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "17257f94096e6553",
+        "type": "ui_group",
+        "name": "PowerChart",
+        "tab": "c1c70187ad535e15",
+        "order": 6,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "49e4adae967befbb",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "c1c70187ad535e15",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
